@@ -77,9 +77,7 @@ public class OofModListener {
     }
 
     private void playOofSound() throws Exception {
-        File soundFile = mod.getSettings().getSelectedSound();
-
-        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile.toURI().toURL());
+        AudioInputStream audioIn = AudioSystem.getAudioInputStream(mod.getSettings().getSelectedSound().toURI().toURL());
         Clip clip = AudioSystem.getClip();
         clip.open(audioIn);
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
