@@ -81,8 +81,6 @@ public class Settings {
         config.save();
     }
 
-    ;
-
     public void loadConfig() throws Exception {
         Configuration config = new Configuration(this.configFile);
         config.load();
@@ -143,7 +141,7 @@ public class Settings {
             fos.write(fileData);  // write out the file we want to save.
             fos.close(); // close the output stream writer
         } catch (Exception m) {
-            System.out.println(m);
+            m.printStackTrace();
         }
     }
 }
