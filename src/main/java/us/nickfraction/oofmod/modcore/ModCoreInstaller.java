@@ -1,6 +1,5 @@
 package us.nickfraction.oofmod.modcore;
 
-import akka.dispatch.Foreach;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -27,7 +26,11 @@ import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /*
     Created by Sk1er for use in all mods. Install under exact package name each time.
@@ -48,7 +51,7 @@ public class ModCoreInstaller {
 
     private static boolean isInitalized() {
         try {
-            LinkedHashSet<String> objects = new LinkedHashSet<String>();
+            LinkedHashSet<String> objects = new LinkedHashSet<>();
             objects.add(className);
             Launch.classLoader.clearNegativeEntries(objects);
             Field invalidClasses = LaunchClassLoader.class.getDeclaredField("invalidClasses");
@@ -56,11 +59,7 @@ public class ModCoreInstaller {
             Object obj = invalidClasses.get(ModCoreInstaller.class.getClassLoader());
             ((Set<String>) obj).remove(className);
             return Class.forName("club.sk1er.mods.core.ModCore") != null;
-        } catch (ClassNotFoundException ignored) {
-            ignored.printStackTrace();
-        } catch (NoSuchFieldException ignored) {
-            ignored.printStackTrace();
-        } catch (IllegalAccessException ignored) {
+        } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException ignored) {
             ignored.printStackTrace();
         }
         return false;
@@ -100,13 +99,7 @@ public class ModCoreInstaller {
             initialize.invoke(modCoreObject, gameDir);
             System.out.println("Loaded ModCore Successfully");
             return;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         System.out.println("Did NOT ModCore Successfully");
@@ -127,7 +120,7 @@ public class ModCoreInstaller {
 
         File metadataFile = new File(dataDir, "metadata.json");
         JsonHolder localMetadata = readFile(metadataFile);
-        if(failed) latestRemote = localMetadata.optString(minecraftVersion);
+        if (failed) latestRemote = localMetadata.optString(minecraftVersion);
         File modcoreFile = new File(dataDir, "Sk1er Modcore-" + latestRemote + " (" + minecraftVersion + ").jar");
 
         if (!modcoreFile.exists() || !localMetadata.optString(minecraftVersion).equalsIgnoreCase(latestRemote) && !failed) {
@@ -429,7 +422,7 @@ public class ModCoreInstaller {
 
         public List<String> getKeys() {
             List<String> tmp = new ArrayList<String>();
-            for(Map.Entry<String, JsonElement> e : object.entrySet()){
+            for (Map.Entry<String, JsonElement> e : object.entrySet()) {
                 tmp.add(e.getKey());
             }
             return tmp;

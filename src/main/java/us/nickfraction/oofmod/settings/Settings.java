@@ -26,7 +26,7 @@ public class Settings {
         configFile = new File(Minecraft.getMinecraft().mcDataDir, "config/oofmod/config.cfg");
         soundsFolder = new File("config/oofmod/sounds");
 
-        if (!soundsFolder.exists()){
+        if (!soundsFolder.exists()) {
             soundsFolder.mkdirs();
         }
 
@@ -43,11 +43,11 @@ public class Settings {
         selectedSound = new File(soundsFolder.getPath() + "/" + selectedSoundName);
     }
 
-    public ArrayList<File> getSounds(){
-        ArrayList<File> result = new ArrayList<File>();
+    public ArrayList<File> getSounds() {
+        ArrayList<File> result = new ArrayList<>();
 
-        for(File file : soundsFolder.listFiles()){
-            if(file.getName().endsWith(".wav")){
+        for (File file : soundsFolder.listFiles()) {
+            if (file.getName().endsWith(".wav")) {
                 result.add(file);
             }
         }
@@ -55,7 +55,7 @@ public class Settings {
         return result;
     }
 
-    public File getSelectedSound(){
+    public File getSelectedSound() {
         return selectedSound;
     }
 
@@ -79,7 +79,9 @@ public class Settings {
         Configuration config = new Configuration(this.configFile);
         this.updateConfig(config, false);
         config.save();
-    };
+    }
+
+    ;
 
     public void loadConfig() throws Exception {
         Configuration config = new Configuration(this.configFile);
@@ -92,8 +94,7 @@ public class Settings {
         Property prop = config.get("global", "enabled", true);
         if (load) {
             enabled = prop.getBoolean();
-        }
-        else {
+        } else {
             prop.set(enabled);
         }
 
@@ -104,23 +105,21 @@ public class Settings {
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(selectedSound.toURI().toURL());
             Clip clip = AudioSystem.getClip();
             clip.open(audioIn);
-        }
-        else {
+        } else {
             prop.set(selectedSoundName);
         }
 
         prop = config.get("global", "volume", 30f);
         if (load) {
             volume = (float) prop.getDouble();
-        }
-        else {
+        } else {
             prop.set(volume);
         }
     }
 
-    private void downloadDefaultSound(){
+    private void downloadDefaultSound() {
         File defaultSound = new File("config/oofmod/sounds/oof.wav");
-        if(defaultSound.exists()){
+        if (defaultSound.exists()) {
             return;
         }
 
@@ -134,15 +133,16 @@ public class Settings {
             con = url.openConnection(); // open the url connection.
             dis = new DataInputStream(con.getInputStream());
             fileData = new byte[con.getContentLength()];
+
             for (int q = 0; q < fileData.length; q++) {
                 fileData[q] = dis.readByte();
             }
+
             dis.close(); // close the data input stream
             fos = new FileOutputStream(new File(soundsFolder.getPath() + "/oof.wav")); //FILE Save Location goes here
             fos.write(fileData);  // write out the file we want to save.
             fos.close(); // close the output stream writer
-        }
-        catch(Exception m) {
+        } catch (Exception m) {
             System.out.println(m);
         }
     }

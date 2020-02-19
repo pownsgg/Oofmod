@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class GuiMainMenu extends GuiScreen {
 
     private OofMod mod;
-    private GuiTransButton next, prev, enabled, preview, save;
     private GuiSlideControl volume;
 
     private int currentIndex;
@@ -34,17 +33,19 @@ public class GuiMainMenu extends GuiScreen {
         this.currentIndex = mod.getSettings().getSounds().indexOf(mod.getSettings().getSelectedSound());
     }
 
-    public void initGui(){
-        buttonList.add(prev = new GuiTransButton(0, getCenter() - 46, getRowPos(2) + 10, 16, 16, "<"));
-        buttonList.add(next = new GuiTransButton(1, getCenter() + 30, getRowPos(2) + 10, 16, 16, ">"));
-        buttonList.add(preview = new GuiTransButton(2, getCenter() - 23, getRowPos(1) + 8, 46, 55, ""));
-        buttonList.add(enabled = new GuiTransButton(3, getCenter() - 45, getRowPos(4) + 10, 90, 18, mod.getSettings().isEnabled() ? EnumChatFormatting.GREEN + "Enabled" : EnumChatFormatting.RED + "Disabled"));
-        buttonList.add(volume = new GuiSlideControl(4, getCenter() - 45, getRowPos(5) + 10, 90, 18, "Volume: ", 0f, 30f, mod.getSettings().getVolume(), true));
-        buttonList.add(save = new GuiTransButton(5, getCenter() - 45, height - 20, 90, 20, "Save"));
+    public void initGui() {
+        buttonList.add(new GuiTransButton(0, getCenter() - 46, getRowPos(2) + 10, 16, 16, "<"));
+        buttonList.add(new GuiTransButton(1, getCenter() + 30, getRowPos(2) + 10, 16, 16, ">"));
+        buttonList.add(new GuiTransButton(2, getCenter() - 23, getRowPos(1) + 8, 46, 55, ""));
+        buttonList.add(new GuiTransButton(3, getCenter() - 45, getRowPos(4) + 10, 90, 18,
+                mod.getSettings().isEnabled() ? EnumChatFormatting.GREEN + "Enabled" : EnumChatFormatting.RED + "Disabled"));
+        buttonList.add(volume = new GuiSlideControl(4, getCenter() - 45, getRowPos(5) + 10, 90, 18, "Volume: ",
+                0f, 30f, mod.getSettings().getVolume(), true));
+        buttonList.add(new GuiTransButton(5, getCenter() - 45, height - 20, 90, 20, "Save"));
     }
 
     public int getRowPos(final int rowNumber) {
-        return this.height / 4 + (24 * rowNumber - 24) -16;
+        return this.height / 4 + (24 * rowNumber - 24) - 16;
     }
 
     public int getCenter() {
@@ -55,17 +56,17 @@ public class GuiMainMenu extends GuiScreen {
         int yPosTitle = 10;
 
         super.drawDefaultBackground();
-        GL11.glPushMatrix();
-        GL11.glTranslatef((2 - 1.0f) * -(this.getCenter()), (2 - 1.0f) * -yPosTitle, 0.0f);
-        GL11.glScaled(2, 2, 2);
+        GlStateManager.pushMatrix();
+        GlStateManager.translate((2 - 1.0f) * (getCenter()), (2 - 1.0f) * -yPosTitle, 0.0f);
+        GlStateManager.scale(2, 2, 2);
         this.drawCenteredString(mc.fontRendererObj, "OofMod V2", this.getCenter(), yPosTitle, 815000);
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
 
-        GL11.glPushMatrix();
-        GL11.glTranslatef((0.7f - 1.0f) * -(this.getCenter()), (0.7f - 1.0f) * -yPosTitle + 12, 0.0f);
-        GL11.glScaled(0.7, 0.7, 0.7);
+        GlStateManager.pushMatrix();
+        GlStateManager.translate((0.7f - 1.0f) * -(this.getCenter()), (0.7f - 1.0f) * -yPosTitle + 12, 0.0f);
+        GlStateManager.scale(0.7, 0.7, 0.7);
         this.drawCenteredString(mc.fontRendererObj, "By Refraction & powns", this.getCenter(), yPosTitle + 12, 815000);
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
 
         super.drawScreen(mouseX, mouseY, partialTicks);
 
@@ -73,17 +74,17 @@ public class GuiMainMenu extends GuiScreen {
         renderWavIcon();
     }
 
-    protected void actionPerformed(GuiButton button){
-        switch (button.id){
+    protected void actionPerformed(GuiButton button) {
+        switch (button.id) {
             case 0: {
                 ArrayList<File> allSounds = mod.getSettings().getSounds();
 
-                if(allSounds.size() <= 1){
+                if (allSounds.size() <= 1) {
                     return;
                 }
 
-                if(currentIndex - 1 < 0){
-                    currentIndex = allSounds.size() -1;
+                if (currentIndex - 1 < 0) {
+                    currentIndex = allSounds.size() - 1;
                 } else {
                     currentIndex--;
                 }
@@ -92,11 +93,11 @@ public class GuiMainMenu extends GuiScreen {
             case 1: {
                 ArrayList<File> allSounds = mod.getSettings().getSounds();
 
-                if(allSounds.size() <= 1){
+                if (allSounds.size() <= 1) {
                     return;
                 }
 
-                if(currentIndex + 1 > allSounds.size() - 1){
+                if (currentIndex + 1 > allSounds.size() - 1) {
                     currentIndex = 0;
                 } else {
                     currentIndex++;
@@ -104,7 +105,10 @@ public class GuiMainMenu extends GuiScreen {
                 break;
             }
             case 2: {
-                try { previewSound(mod.getSettings().getSounds().get(currentIndex).getName(), volume.GetValueAsFloat() - 30f); } catch (Exception e) {}
+                try {
+                    previewSound(mod.getSettings().getSounds().get(currentIndex).getName(), volume.GetValueAsFloat() - 30f);
+                } catch (Exception ignored) {
+                }
                 break;
             }
             case 3: {
@@ -121,73 +125,71 @@ public class GuiMainMenu extends GuiScreen {
         }
     }
 
-    protected void renderUI(){
-        float f2 = (float)(8168374 >> 16 & 255) / 255.0F;
-        float f3 = (float)(8168374 >> 8 & 255) / 255.0F;
-        float f4 = (float)(8168374 & 255) / 255.0F;
+    protected void renderUI() {
+        float f2 = (float) (8168374 >> 16 & 255) / 255.0F;
+        float f3 = (float) (8168374 >> 8 & 255) / 255.0F;
+        float f4 = (float) (8168374 & 255) / 255.0F;
 
-        if(this.width >= 640 && this.height >= 350){
-            GL11.glPushMatrix();
-            GL11.glScaled(1, 1, 0);
+        if (this.width >= 640 && this.height >= 350) {
+            GlStateManager.pushMatrix();
+            GlStateManager.scale(1, 1, 0);
             this.drawString(mc.fontRendererObj, "Version: 1.8.9 - " + OofMod.VERSION, 2, 2, 8168374);
-            GL11.glPopMatrix();
+            GlStateManager.popMatrix();
 
-            GL11.glPushMatrix();
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glDisable(GL11.GL_TEXTURE_2D);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            GL11.glColor4f(f2, f3, f4, 0.3f);
+            GlStateManager.pushMatrix();
+            GlStateManager.enableBlend();
+            GlStateManager.disableTexture2D();
+            GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GlStateManager.color(f2, f3, f4, 0.3f);
 
             Tessellator tes = Tessellator.getInstance();
             WorldRenderer worldrenderer = tes.getWorldRenderer();
-            worldrenderer.begin(4, DefaultVertexFormats.POSITION);
+            worldrenderer.begin(GL11.GL_LINE_BIT, DefaultVertexFormats.POSITION);
             worldrenderer.pos(0, 0, 0).endVertex();
             worldrenderer.pos(0, 140, 0).endVertex();
             worldrenderer.pos(140, 0, 0).endVertex();
             tes.draw();
 
-            GL11.glEnable(GL11.GL_TEXTURE_2D);
-            GL11.glDisable(GL11.GL_BLEND);
-            GL11.glPopMatrix();
+            GlStateManager.enableTexture2D();
+            GlStateManager.disableBlend();
+            GlStateManager.popMatrix();
 
-            GL11.glPushMatrix();
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glDisable(GL11.GL_TEXTURE_2D);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            GL11.glColor4f(f2, f3, f4, 0.3f);
+            GlStateManager.pushMatrix();
+            GlStateManager.enableBlend();
+            GlStateManager.disableTexture2D();
+            GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GlStateManager.color(f2, f3, f4, 0.3f);
 
-            Tessellator tes2 = Tessellator.getInstance();
-            WorldRenderer worldrenderer2 = tes2.getWorldRenderer();
-            worldrenderer2.begin(4, DefaultVertexFormats.POSITION);
-            worldrenderer2.pos(this.width, this.height, 0).endVertex();
-            worldrenderer2.pos(this.width, this.height - 140, 0).endVertex();
-            worldrenderer2.pos(this.width - 140, this.height, 0).endVertex();
+            worldrenderer.begin(GL11.GL_LINE_BIT, DefaultVertexFormats.POSITION);
+            worldrenderer.pos(this.width, this.height, 0).endVertex();
+            worldrenderer.pos(this.width, this.height - 140, 0).endVertex();
+            worldrenderer.pos(this.width - 140, this.height, 0).endVertex();
             tes.draw();
 
-            GL11.glColor4f(1,1,1,1);
-            GL11.glEnable(GL11.GL_TEXTURE_2D);
-            GL11.glDisable(GL11.GL_BLEND);
-            GL11.glPopMatrix();
+            GlStateManager.color(1, 1, 1, 1);
+            GlStateManager.enableTexture2D();
+            GlStateManager.disableBlend();
+            GlStateManager.popMatrix();
         }
 
     }
 
-    private void renderWavIcon(){
+    private void renderWavIcon() {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         GlStateManager.enableAlpha();
-        GlStateManager.color(1,1,1);
+        GlStateManager.color(1, 1, 1);
 
         mc.renderEngine.bindTexture(new ResourceLocation("wav-icon.png"));
         Gui.drawModalRectWithCustomSizedTexture(this.getCenter() - 20, getRowPos(1) + 10, 0, 0, 40, 51, 40, 51);
 
         GlStateManager.popMatrix();
 
-        GL11.glPushMatrix();
-        GL11.glTranslatef((0.8f - 1.0f) * -(this.getCenter()), (0.8f - 1.0f) * -(getRowPos(4) - 6), 0.0f);
-        GL11.glScaled(0.8, 0.8, 0.8);
+        GlStateManager.pushMatrix();
+        GlStateManager.translate((0.8f - 1.0f) * -(this.getCenter()), (0.8f - 1.0f) * -(getRowPos(4) - 6), 0.0f);
+        GlStateManager.scale(0.8, 0.8, 0.8);
         this.drawCenteredString(mc.fontRendererObj, mod.getSettings().getSounds().get(currentIndex).getName(), this.getCenter(), getRowPos(4) - 6, -1);
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
 
     private void previewSound(String fileName, float volume) throws Exception {
@@ -201,15 +203,10 @@ public class GuiMainMenu extends GuiScreen {
         clip.start();
     }
 
-    private int getColorWithAlpha(int rgb, int a) {
-        int r = rgb >> 16 & 0xFF;
-        int g = rgb >> 8 & 0xFF;
-        int b = rgb & 0xFF;
-        return a << 24 | r << 16 | g << 8 | b;
-    }
-
-    public void onGuiClosed()
-    {
-        try { mod.getSettings().saveConfig(); } catch (Exception e) {}
+    public void onGuiClosed() {
+        try {
+            mod.getSettings().saveConfig();
+        } catch (Exception ignored) {
+        }
     }
 }

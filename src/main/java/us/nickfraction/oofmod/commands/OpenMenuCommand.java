@@ -1,8 +1,10 @@
 package us.nickfraction.oofmod.commands;
 
+import club.sk1er.mods.core.ModCore;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import us.nickfraction.oofmod.OofMod;
+import us.nickfraction.oofmod.gui.screens.GuiMainMenu;
 
 public class OpenMenuCommand extends CommandBase {
 
@@ -24,11 +26,10 @@ public class OpenMenuCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
-        mod.openMenu();
+        ModCore.getInstance().getGuiHandler().open(new GuiMainMenu(mod));
     }
 
-    public boolean canCommandSenderUseCommand(ICommandSender p_71519_1_)
-    {
+    public boolean canCommandSenderUseCommand(ICommandSender p_71519_1_) {
         return true;
     }
 
