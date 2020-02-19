@@ -19,7 +19,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 
 public class GuiMainMenu extends GuiScreen {
 
@@ -77,7 +77,7 @@ public class GuiMainMenu extends GuiScreen {
     protected void actionPerformed(GuiButton button) {
         switch (button.id) {
             case 0: {
-                ArrayList<File> allSounds = mod.getSettings().getSounds();
+                List<File> allSounds = mod.getSettings().getSounds();
 
                 if (allSounds.size() <= 1) {
                     return;
@@ -91,7 +91,7 @@ public class GuiMainMenu extends GuiScreen {
                 break;
             }
             case 1: {
-                ArrayList<File> allSounds = mod.getSettings().getSounds();
+                List<File> allSounds = mod.getSettings().getSounds();
 
                 if (allSounds.size() <= 1) {
                     return;
@@ -132,11 +132,6 @@ public class GuiMainMenu extends GuiScreen {
 
         if (this.width >= 640 && this.height >= 350) {
             GlStateManager.pushMatrix();
-            GlStateManager.scale(1, 1, 0);
-            this.drawString(mc.fontRendererObj, "Version: 1.8.9 - " + OofMod.VERSION, 2, 2, 8168374);
-            GlStateManager.popMatrix();
-
-            GlStateManager.pushMatrix();
             GlStateManager.enableBlend();
             GlStateManager.disableTexture2D();
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -170,6 +165,8 @@ public class GuiMainMenu extends GuiScreen {
             GlStateManager.enableTexture2D();
             GlStateManager.disableBlend();
             GlStateManager.popMatrix();
+
+            this.drawString(mc.fontRendererObj, "Version: 1.8.9 - " + OofMod.VERSION, 2, 2, 8168374);
         }
 
     }
