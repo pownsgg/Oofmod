@@ -57,7 +57,7 @@ public class GuiMainMenu extends GuiScreen {
 
         super.drawDefaultBackground();
         GlStateManager.pushMatrix();
-        GlStateManager.translate((2 - 1.0f) * (getCenter()), (2 - 1.0f) * -yPosTitle, 0.0f);
+        GlStateManager.translate((2 - 1.0f) * -(this.getCenter()), (2 - 1.0f) * -yPosTitle, 0.0f);
         GlStateManager.scale(2, 2, 2);
         this.drawCenteredString(mc.fontRendererObj, "OofMod V2", this.getCenter(), yPosTitle, 815000);
         GlStateManager.popMatrix();
