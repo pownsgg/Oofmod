@@ -29,8 +29,8 @@ public class OpenMenuCommand extends CommandBase {
         ModCore.getInstance().getGuiHandler().open(new GuiMainMenu(mod));
     }
 
-    public boolean canCommandSenderUseCommand(ICommandSender p_71519_1_) {
-        return true;
+    @Override
+    public int getRequiredPermissionLevel() {
+        return -1;
     }
-
 }
