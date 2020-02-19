@@ -106,7 +106,7 @@ public class GuiMainMenu extends GuiScreen {
             }
             case 2: {
                 try {
-                    previewSound(mod.getSettings().getSounds().get(currentIndex).getName(), volume.GetValueAsFloat() - 30f);
+                    previewSound(mod.getSettings().getSounds().get(currentIndex).getName(), volume.getValueAsFloat() - 30f);
                 } catch (Exception ignored) {
                 }
                 break;
@@ -117,7 +117,7 @@ public class GuiMainMenu extends GuiScreen {
                 break;
             }
             case 5: {
-                mod.getSettings().setVolume(volume.GetValueAsFloat());
+                mod.getSettings().setVolume(volume.getValueAsFloat());
                 mod.getSettings().setSelectedSoundName(mod.getSettings().getSounds().get(currentIndex).getName());
                 mc.displayGuiScreen(null);
                 break;
