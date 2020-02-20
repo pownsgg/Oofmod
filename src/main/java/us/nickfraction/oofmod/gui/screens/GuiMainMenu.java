@@ -32,6 +32,11 @@ public class GuiMainMenu extends GuiScreen {
     public GuiMainMenu(OofMod mod) {
         this.mod = mod;
         this.currentIndex = mod.getSettings().getSounds().indexOf(mod.getSettings().getSelectedSound());
+
+        if(!mod.getSettings().getSelectedSound().exists()){
+            currentIndex = 0;
+            mod.getSettings().setSelectedSoundName(mod.getSettings().getSounds().get(currentIndex).getName());
+        }
     }
 
     public void initGui(){

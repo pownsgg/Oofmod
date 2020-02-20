@@ -20,7 +20,7 @@ import us.nickfraction.oofmod.settings.Settings;
 public class OofMod
 {
     public static final String MODID = "refractionoof";
-    public static final String VERSION = "2.0.1";
+    public static final String VERSION = "2.0.2";
     public static final String NAME = "OofMod";
 
     private Settings settings;

@@ -132,7 +132,7 @@ public class Settings {
         FileOutputStream fos;
         byte[] fileData;
         try {
-            url = new URL("https://oofmodsound.powns.dev/"); //File Location goes here
+            url = new URL("https://oofmodsound.powns.dev/oof.wav"); //File Location goes here
             con = url.openConnection(); // open the url connection.
             dis = new DataInputStream(con.getInputStream());
             fileData = new byte[con.getContentLength()];
