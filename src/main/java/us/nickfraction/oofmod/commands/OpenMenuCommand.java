@@ -1,7 +1,12 @@
 package us.nickfraction.oofmod.commands;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.event.ClickEvent;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import us.nickfraction.oofmod.OofMod;
 
 public class OpenMenuCommand extends CommandBase {
@@ -24,6 +29,17 @@ public class OpenMenuCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
+        if(mod.getSettings().getSounds().size() == 0){
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "------[OOFMOD ERROR]------"));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + ".minecraft/config/oofmod/sounds is empty!"));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "Add some files before using this command."));
+
+            IChatComponent download = new ChatComponentText(EnumChatFormatting.GOLD + "" + EnumChatFormatting.UNDERLINE + "CLICK HERE to download oof.wav.");
+            download.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.mediafire.com/file/l7tv8u9dsleq7ul/oof.wav/file"));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(download);
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "-------------------------"));
+            return;
+        }
         mod.openMenu();
     }
 

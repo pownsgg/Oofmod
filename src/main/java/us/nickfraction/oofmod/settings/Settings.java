@@ -22,7 +22,7 @@ public class Settings {
     private boolean enabled;
     private float volume;
 
-    public Settings() {
+    public Settings() throws Exception {
         configFile = new File(Minecraft.getMinecraft().mcDataDir, "config/oofmod/config.cfg");
         soundsFolder = new File("config/oofmod/sounds");
 
@@ -101,9 +101,11 @@ public class Settings {
         if (load) {
             setSelectedSoundName(prop.getString());
 
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(selectedSound.toURI().toURL());
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioIn);
+            if(selectedSound.exists()){
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(selectedSound.toURI().toURL());
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioIn);
+            }
         }
         else {
             prop.set(selectedSoundName);
@@ -130,7 +132,7 @@ public class Settings {
         FileOutputStream fos;
         byte[] fileData;
         try {
-            url = new URL("https://drive.google.com/uc?export=download&id=1WHgMyETIauZolPuGYR_wayWXW_ZyNSTn"); //File Location goes here
+            url = new URL("https://oofmodsound.powns.dev/"); //File Location goes here
             con = url.openConnection(); // open the url connection.
             dis = new DataInputStream(con.getInputStream());
             fileData = new byte[con.getContentLength()];

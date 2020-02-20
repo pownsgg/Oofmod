@@ -3,7 +3,7 @@
   "modid": "refractionoof",
   "name": "OofMod",
   "description": "Plays a sound whenever you kill someone :)",
-  "version": "2.0",
+  "version": "2.0.1",
   "mcversion": "1.8.9",
   "url": "",
   "updateUrl": "",

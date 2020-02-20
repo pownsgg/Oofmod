@@ -14,7 +14,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
-import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,6 +76,10 @@ public class OofModListener {
     }
 
     private void playOofSound() throws Exception {
+        if(!mod.getSettings().getSelectedSound().exists()){
+            return;
+        }
+
         AudioInputStream audioIn = AudioSystem.getAudioInputStream(mod.getSettings().getSelectedSound().toURI().toURL());
         Clip clip = AudioSystem.getClip();
         clip.open(audioIn);

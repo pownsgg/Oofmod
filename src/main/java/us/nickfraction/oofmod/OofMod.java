@@ -1,6 +1,8 @@
 package us.nickfraction.oofmod;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -18,14 +20,14 @@ import us.nickfraction.oofmod.settings.Settings;
 public class OofMod
 {
     public static final String MODID = "refractionoof";
-    public static final String VERSION = "2.0";
+    public static final String VERSION = "2.0.1";
     public static final String NAME = "OofMod";
 
     private Settings settings;
 
     private boolean openMenu;
 
-    public OofMod() {
+    public OofMod() throws Exception {
         settings = new Settings();
     }
 
