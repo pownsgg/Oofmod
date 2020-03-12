@@ -39,7 +39,6 @@ public class OofModListener {
             return;
         }
 
-        //TODO: Nicked players?
         String killMessageRegex = "(\\w{1,16}).+ (by|of|to|for|with) (" + nameToCheck + ")";
         String usernamePatternRegex = "^[a-zA-Z0-9_-]{3,16}$";
 
